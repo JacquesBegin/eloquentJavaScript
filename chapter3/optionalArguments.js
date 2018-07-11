@@ -4,8 +4,8 @@
 // "=" will be used, else the parameter value passed in
 // will be used.
 
-function addOptional(arg1, arg2 = 2) {
-  console.log(arg1 + arg2);
+function addOptional(arg1, arg2 = 2, arg3 = 3) {
+  console.log(arg1 + arg2 + arg3);
 }
 
 addOptional(1);
