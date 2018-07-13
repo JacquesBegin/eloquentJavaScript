@@ -14,9 +14,9 @@ function closure(n) {
       return n * n;
     }
   }
-  return () => obj.three;
+  return () => obj;
 }
 
 let closure1 = closure(2);
 
-console.log(closure1()());
+console.log(closure1().one);
