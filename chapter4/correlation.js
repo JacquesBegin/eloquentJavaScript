@@ -1,4 +1,4 @@
-// Compute the phi cofficient
+// Compute the phi cofficient from correlation table data
 
 
 // This will produce a number between -1 and 1
