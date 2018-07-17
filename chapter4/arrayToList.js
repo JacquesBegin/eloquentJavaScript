@@ -54,7 +54,29 @@ function listToArray(testObj) {
   } while (restNotNull);
   return arr;
 }
-
 console.log(listToArray(arrayToList([1, 2, 3])));
 
 
+// Creates a new object from existing object.
+// The original object is not altered.
+function copyObject(obj) {
+  let newObj = {};
+  for (let el in obj) {
+    if (obj[el] !== null && typeof(obj[el]) === "object") {
+      newObj[el] = copyObject(obj[el]);
+    } else {
+      newObj[el] = obj[el];
+    }
+  }
+  return newObj;
+}
+
+// Add a new value to the top of a list.
+function prepend(dataToAdd, obj) {
+  return ({
+    value: dataToAdd,
+    rest: copyObject(obj)
+  });
+}
+
+console.log("prepend: ", prepend(111, testObj));
