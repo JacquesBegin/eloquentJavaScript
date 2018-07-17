@@ -80,3 +80,18 @@ function prepend(dataToAdd, obj) {
 }
 
 console.log("prepend: ", prepend(111, testObj));
+
+
+// Return element at given position in list using index
+function nth(list, index) {
+  let foundElement;
+  if (index < 0 || list === null) {
+  } else if (index == 0) {
+    foundElement = list.value;
+  } else {
+    foundElement = nth(list.rest, --index);
+  }
+  return foundElement;
+}
+
+console.log("nth: ", nth(testObj, 4));
