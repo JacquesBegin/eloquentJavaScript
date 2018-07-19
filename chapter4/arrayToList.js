@@ -83,15 +83,60 @@ console.log("prepend: ", prepend(111, testObj));
 
 
 // Return element at given position in list using index
-function nth(list, index) {
+function nthRecursive(list, index) {
   let foundElement;
   if (index < 0 || list === null) {
   } else if (index == 0) {
     foundElement = list.value;
   } else {
-    foundElement = nth(list.rest, --index);
+    foundElement = nthRecursive(list.rest, --index);
   }
   return foundElement;
 }
 
-console.log("nth: ", nth(testObj, 4));
+// Return element at given position in list using index
+function nthLoop(list, index) {
+  let count = index;
+  let tempObj = copyObject(list);
+  let foundElement;
+  while (count >= 0 && tempObj !== null ) {
+    if (count == 0) {
+      foundElement = tempObj.value;
+    } else {
+      tempObj = tempObj.rest;
+    }
+    count--;
+  }
+  return foundElement;
+}
+
+// Find nth position using a for loop to check if the 
+// value of the node variable is null.
+function nthNodeLoop(list, num) {
+  let count = 0;
+  let elementFound;
+  for (let node = list; node; node = node.rest) {
+    if (count == num) {
+      elementFound = node.value;
+    }
+    count++;
+  }
+  return elementFound;
+}
+
+console.log("nthRecursive: ", nthRecursive(testObj, 4));
+console.log("nthLoop: ", nthLoop(testObj, 4));
+console.log("nthNodeLoop: ", nthNodeLoop(testObj, 5));
+
+
+// Convert a list to an array using a for loop to check for
+// a null value in the rest property.
+function listToArrayLoop(list) {
+  let arr = [];
+  for (let node = list; node; node = node.rest) {
+    arr.push(node.value);
+  }
+  return arr;
+}
+
+console.log("listToArrayLoop: ", listToArrayLoop(testObj));
