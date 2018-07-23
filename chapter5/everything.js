@@ -11,9 +11,7 @@ function everyLoop(arr, test) {
 
 
 function everySome(arr, test) {
-  let found = arr.some(test)
-  // return (!found);
-  return null;
+  return (!arr.some((n) => {!test(n)}));
 }
 
 
@@ -30,3 +28,14 @@ console.log(everyLoop([2, 4, 16], n => n < 10));
 console.log(everyLoop([], n => n < 10));
 // → true
 console.log("everySome: ", everySome(arr, testFunc));
+
+
+function deMorgansLaw(a, b) {
+  console.log(`a && b: ${a && b}`);
+  console.log(`!(!a || !b): ${!(!a || !b)}`);
+}
+
+// console.log(`deMorgansLaw: ${deMorgansLaw(true, true)}`);
+// console.log(`deMorgansLaw: ${deMorgansLaw(true, false)}`);
+// console.log(`deMorgansLaw: ${deMorgansLaw(false, true)}`);
+// console.log(`deMorgansLaw: ${deMorgansLaw(false, false)}`);
