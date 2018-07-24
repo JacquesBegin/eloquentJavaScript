@@ -9,6 +9,15 @@ function everyLoop(arr, test) {
   return found;
 }
 
+function everyForLoop(arr, test) {
+  for (let i = 0; i < arr.length; i++) {
+    if (!test(arr[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
 
 function everySome(arr, test) {
   return (!arr.some((n) => {!test(n)}));
@@ -20,12 +29,12 @@ testFunc = (element) => {
   return element % 2 === 0;
 }
 
-console.log("everyLoop: ", everyLoop(arr, testFunc));
-console.log(everyLoop([1, 3, 5], n => n < 10));
+console.log("everyLoop: ", everyForLoop(arr, testFunc));
+console.log(everyForLoop([1, 3, 5], n => n < 10));
 // → true
-console.log(everyLoop([2, 4, 16], n => n < 10));
+console.log(everyForLoop([2, 4, 16], n => n < 10));
 // → false
-console.log(everyLoop([], n => n < 10));
+console.log(everyForLoop([], n => n < 10));
 // → true
 console.log("everySome: ", everySome(arr, testFunc));
 
