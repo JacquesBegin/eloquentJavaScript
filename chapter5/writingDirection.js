@@ -9,45 +9,6 @@
 // and record the name of the language.
 // 4. Compare and return the language with the highest count
 
-
-
-function writingDirection(text) {
-  let directionTracker = [];
-  for (let letter of text) {
-
-  }
-
-  return directionTracker;
-}
-
-function findScriptByCode(code) {
-
-}
-
-function filterArray(array, test) {
-  let filteredArray = [];
-  for (let el of array) {
-    if (test(el)) {
-      filteredArray.push(el);
-    }
-  }
-  return filteredArray;
-}
-// console.log("filterArray: ", filterArray([1, 2, 3, 4, 5, 6], (n) => n % 2 === 0));
-
-
-function mapArray(array, transform) {
-  let mappedArray = [];
-  for (let el of array) {
-    mappedArray.push(transform(el));
-  }
-  return mappedArray;
-}
-
-// console.log("mapArray: ", mapArray([1, 2, 3, 4, 5, 6], (n) => {
-//   return n * 5;
-// }));
-
 var SCRIPTS = [
   {
     name: "Adlam",
@@ -1162,6 +1123,50 @@ var SCRIPTS = [
     link: "https://en.wikipedia.org/wiki/Mongolian_writing_systems#Horizontal_square_script"
   }
 ];
+
+
+
+function writingDirection(text) {
+  let dominantDirection;
+  for (let letter of text) {
+
+  }
+
+  return dominantDirection;
+}
+
+function findScriptByCode(code) {
+  for (let script in SCRIPTS) {
+
+  }
+}
+
+function getScriptDirection(script) {
+  return script.direction;
+}
+
+function filterArray(array, test) {
+  let filteredArray = [];
+  for (let el of array) {
+    if (test(el)) {
+      filteredArray.push(el);
+    }
+  }
+  return filteredArray;
+}
+// console.log("filterArray: ", filterArray([1, 2, 3, 4, 5, 6], (n) => n % 2 === 0));
+
+function mapArray(array, transform) {
+  let mappedArray = [];
+  for (let el of array) {
+    mappedArray.push(transform(el));
+  }
+  return mappedArray;
+}
+
+// console.log("mapArray: ", mapArray([1, 2, 3, 4, 5, 6], (n) => {
+//   return n * 5;
+// }));
 
 function characterCount(script) {
   return script.ranges.reduce((count, [from, to]) => {
