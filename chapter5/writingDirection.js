@@ -1127,18 +1127,41 @@ var SCRIPTS = [
 
 
 function writingDirection(text) {
-  let dominantDirection;
+  let dominantDirection = {
+    ltr: 0,
+    rtl: 0,
+    ttb: 0 
+  };
   for (let letter of text) {
-
+    
+    let script = findScriptByCode(letter.codePointAt(0));
+    if (script) dominantDirection[script.direction]++;
   }
 
-  return dominantDirection;
+  // Return the direction that has the highest value.
+  let highest = {direction: "", count: 0};
+  for (let key in dominantDirection) {
+    highest = dominantDirection[key] > highest.count ? {direction: key, count: dominantDirection[key]} : highest;
+  }
+  return highest.direction;
 }
 
-function findScriptByCode(code) {
-  for (let script in SCRIPTS) {
+console.log(writingDirection("Hey there!"));
+// -> ltr
+console.log(writingDirection("Hey, مساء الخير"));
+// -> rtl
 
+function findScriptByCode(code) {
+  console.log(code);
+  let count = 0;
+  for (let script of SCRIPTS) {
+    if (script.ranges.some(([from, to]) => {
+      return (code >= from && code < to);
+    })) {
+      return script;
+    }
   }
+  return null;
 }
 
 function getScriptDirection(script) {
@@ -1217,6 +1240,6 @@ function printLetters() {
     }
   }
 }
-printLetters()("hello");
+// printLetters()("hello");
 
-repeat(3, printLetters);
+// repeat(3, printLetters);
