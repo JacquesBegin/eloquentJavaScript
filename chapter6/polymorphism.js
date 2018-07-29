@@ -2,6 +2,11 @@ class Rabbit {
   constructor(type) {
     this.type = type;
   }
+
+  get rabbit() {
+    return this.type;
+  }
+
   speak(line) {
     console.log(`${this.type} rabbit says: ${line}`);
   }
@@ -16,3 +21,4 @@ let blueRabbit = new Rabbit("blue");
 console.log(blackRabbit.toString());
 blueRabbit.speak.call(blackRabbit, "I'm a black rabbit.");
 console.log(blueRabbit.toString());
+console.log(blueRabbit.rabbit);
