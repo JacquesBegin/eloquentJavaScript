@@ -58,3 +58,24 @@ let matrix = new Matrix(2, 2, (x, y) => `value ${x},${y}`);
 for (let {x, y, value} of matrix) {
   console.log(x, y, value);
 }
+
+let newMatrix = new Matrix(3, 3, (x, y) => `[${x}, ${y}]`);
+
+console.log(newMatrix.height);
+
+function printMatrix(matrix) {
+  let matrixWidth = matrix.width;
+  let matrixHeight = matrix.height;
+  let output = "";
+
+  for (let i = 0; i < matrixHeight; i++) {
+    for (let j = 0; j < matrixWidth; j++) {
+      output += matrix.content[i * matrixWidth + j];
+    }
+    output += "\n";
+  }
+  return output;
+}
+
+console.log(printMatrix(newMatrix));
+
