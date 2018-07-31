@@ -47,12 +47,42 @@ let newFromGroup = Group.from([1, "bye", {kiss: "positive"}]);
 
 console.log(newFromGroup);
 
-let group = Group.from([10, 20]);
-console.log(group.has(10));
-// → true
-console.log(group.has(30));
-// → false
-group.add(10);
-group.delete(10);
-console.log(group.has(10));
-// → false
+// let group = Group.from([10, 20]);
+// console.log(group.has(10));
+// // → true
+// console.log(group.has(30));
+// // → false
+// group.add(10);
+// group.delete(10);
+// console.log(group.has(10));
+// // → false
+
+class GroupIterator {
+  constructor(group) {
+    this.count = 0;
+    this.group = group.group;
+  }
+
+  next() {
+    if (this.count >= this.group.length) {
+      return {done: true};
+    }
+    let value = this.group[this.count] + "X";
+    this.count++;
+    return {value, done: false};
+  }
+}
+
+Group.prototype[Symbol.iterator] = function() {
+  return new GroupIterator(this);
+}
+
+// for (let item of newFromGroup) {
+//   console.log(item);
+// }
+for (let value of Group.from(["a", "b", "c"])) {
+  console.log(value);
+}
+// → a
+// → b
+// → c
