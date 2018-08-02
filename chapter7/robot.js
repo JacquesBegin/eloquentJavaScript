@@ -8,22 +8,6 @@ const roads = [
   "Marketplace-Town Hall",       "Shop-Town Hall"
 ];
 
-// function buildGraph(edges) {
-//   let graph = Object.create(null);
-//   function addEdge(from, to) {
-//     if (graph[from] == null) {
-//       graph[from] = [to];
-//     } else {
-//       graph[from].push(to);
-//     }
-//   }
-//   for (let [from, to] of edges.map(r => r.split("-"))) {
-//     addEdge(from, to);
-//     addEdge(to, from);
-//   }
-//   return graph;
-// }
-
 
 function buildGraph(roads) {
   let allConnections = Object.create(null);
@@ -41,35 +25,37 @@ function buildGraph(roads) {
   return allConnections;
 }
 
-let destinations = buildGraph(roads); 
-// for (let road of roads) {
-//   let segment = road.split("-");
-//   if (destinations.hasOwnProperty(segment[0])) {
-//     if (!destinations[segment[0]].includes(segment[1])) {
-//       destinations[segment[0]].push(segment[1]);
-//     }
-//   } else {
-//     destinations[segment[0]] = [segment[1]];
-//   }
-//   if (destinations.hasOwnProperty(segment[1])) {
-//     if (!destinations[segment[1]].includes(segment[0])) {
-//       destinations[segment[1]].push(segment[0]);
-//     }
-//   } else {
-//     destinations[segment[1]] = [segment[0]];
-//   }
-// }
+let destinations = buildGraph(roads);
 
-// console.log(destinations);
+class VillageState {
+  constructor(loc, parcels) {
+    this.robotLocation = loc;
+    this.parcels = parcels;
+  }
 
+  move(destination) {
+    if (!destinations[this.robotLocation].includes(destination)) {
+      return this;
+    } else {
+      let parcels = this.parcels.map(parcel => {
+        if (parcel.place != this.place) return parcel;
+        return {place: destination, address: parcel.address};
+      })
+    }
+    // return new VillageState()
+  }
+}
+
+
+// Only used to print out destinations to the console.
 function displayDestinations(startingLocation) {
+  let destinations = buildGraph(roads);
   let allDestinations = `Destinations from ${startingLocation}:`;
   if (destinations[startingLocation]) {
     for (let dest of destinations[startingLocation]) {
       allDestinations += `\n${dest}`;
     }
   }
-  console.log(destinationPrintout);
   return allDestinations;
 }
 displayDestinations("Marketplace");
