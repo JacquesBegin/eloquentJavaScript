@@ -33,18 +33,43 @@ class VillageState {
     this.parcels = parcels;
   }
 
+  toString() {
+    let str = `Village State:\nRobot's Location: ${this.robotLocation}\nParcel Locations: `;
+    for (let p of this.parcels) {
+      str += `From ${p.place} going to ${p.address}\n`
+    }
+    return str;
+  }
+
+  listCollectedParcels() {
+    let collectedParcels = this.parcels.map(p => {
+      console.log(`Current location: ${p.place}\nDelivery Address: ${p.address}`); 
+    });
+  }
+
   move(destination) {
     if (!destinations[this.robotLocation].includes(destination)) {
+      console.log("VILLAGE STATE NOT UPDATED")
       return this;
     } else {
       let parcels = this.parcels.map(parcel => {
         if (parcel.place != this.place) return parcel;
         return {place: destination, address: parcel.address};
-      })
+      }).filter(p => p.place != p.address);
+      return new VillageState(destination, parcels);
     }
     // return new VillageState()
   }
 }
+
+let village1 = new VillageState("Marketplace", [{place: "Farm", address: "Grete's House"}, {place: "Grete's", address: "Ernie's House"}]);
+console.log(village1.toString());
+console.log(Object.prototype.toString.call(village1));
+
+let village2 = village1.move("Farm");
+console.log(village2.toString());
+let village3 = village2.move("Grete's House");
+console.log(village3.toString());
 
 
 // Only used to print out destinations to the console.
@@ -58,4 +83,4 @@ function displayDestinations(startingLocation) {
   }
   return allDestinations;
 }
-displayDestinations("Marketplace");
+// displayDestinations("Marketplace");
