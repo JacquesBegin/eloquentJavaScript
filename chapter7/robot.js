@@ -29,12 +29,12 @@ let destinations = buildGraph(roads);
 
 class VillageState {
   constructor(loc, parcels) {
-    this.robotLocation = loc;
+    this.place = loc;
     this.parcels = parcels;
   }
 
   toString() {
-    let str = `Village State:\nRobot's Location: ${this.robotLocation}\nParcel Locations: `;
+    let str = `Village State:\nRobot's Location: ${this.place}\nParcel Locations: `;
     for (let p of this.parcels) {
       str += `From ${p.place} going to ${p.address}\n`
     }
@@ -48,28 +48,35 @@ class VillageState {
   }
 
   move(destination) {
-    if (!destinations[this.robotLocation].includes(destination)) {
+    if (!destinations[this.place].includes(destination)) {
       console.log("VILLAGE STATE NOT UPDATED")
       return this;
     } else {
       let parcels = this.parcels.map(parcel => {
+        // console.log(`parcel.place: ${parcel.place}\nthis.place: ${this.place}`);
         if (parcel.place != this.place) return parcel;
+        // console.log("parcel place and this place equal");
         return {place: destination, address: parcel.address};
       }).filter(p => p.place != p.address);
+      // console.log(parcels);
       return new VillageState(destination, parcels);
     }
-    // return new VillageState()
   }
 }
 
-let village1 = new VillageState("Marketplace", [{place: "Farm", address: "Grete's House"}, {place: "Grete's", address: "Ernie's House"}]);
+let village1 = new VillageState("Marketplace", [{place: "Farm", address: "Ernie's House"}, {place: "Grete's House", address: "Ernie's House"}]);
 console.log(village1.toString());
-console.log(Object.prototype.toString.call(village1));
+// console.log(Object.prototype.toString.call(village1));
 
 let village2 = village1.move("Farm");
 console.log(village2.toString());
 let village3 = village2.move("Grete's House");
 console.log(village3.toString());
+let village4 = village3.move("Ernie's House");
+console.log(village4.toString());
+console.log(village1.toString());
+
+
 
 
 // Only used to print out destinations to the console.
