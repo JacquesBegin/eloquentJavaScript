@@ -156,7 +156,8 @@ function routeRobot(state, memory) {
 
 // runRobot(VillageState.random(), randomRobot);
 // runRobot(VillageState.random(), routeRobot, []);
-runRobot(VillageState.random(), goalOrientedRobot, []);
+// runRobot(VillageState.random(), goalOrientedRobot, []);
+runRobot(VillageState.random(), routeRobot, []);
 
 
 // Only used to print out destinations to the console.
