@@ -8,6 +8,13 @@ const roads = [
   "Marketplace-Town Hall",       "Shop-Town Hall"
 ];
 
+const mailRoute = [
+  "Alice's House", "Cabin", "Alice's House", "Bob's House",
+  "Town Hall", "Daria's House", "Ernie's House",
+  "Grete's House", "Shop", "Grete's House", "Farm",
+  "Marketplace", "Post Office"
+];
+
 
 function buildGraph(roads) {
   let allConnections = Object.create(null);
@@ -64,19 +71,65 @@ class VillageState {
   }
 }
 
-let village1 = new VillageState("Marketplace", [{place: "Farm", address: "Ernie's House"}, {place: "Grete's House", address: "Ernie's House"}]);
-console.log(village1.toString());
-// console.log(Object.prototype.toString.call(village1));
+VillageState.random = function(parcelCount = 5) {
+  let parcels = [];
+  for (let i = 0; i < parcelCount; i++) {
+    let address = randomPick(Object.keys(destinations));
+    let place;
+    do {
+      place = randomPick(Object.keys(destinations));
+    } while (place == address);
+    parcels.push({place, address});
+  }
+  return new VillageState("Post Office", parcels);
+};
 
-let village2 = village1.move("Farm");
-console.log(village2.toString());
-let village3 = village2.move("Grete's House");
-console.log(village3.toString());
-let village4 = village3.move("Ernie's House");
-console.log(village4.toString());
-console.log(village1.toString());
+// let village1 = new VillageState("Marketplace", [{place: "Farm", address: "Ernie's House"}, {place: "Grete's House", address: "Ernie's House"}]);
+// console.log(village1.toString());
+// // console.log(Object.prototype.toString.call(village1));
+
+// let village2 = village1.move("Farm");
+// console.log(village2.toString());
+// let village3 = village2.move("Grete's House");
+// console.log(village3.toString());
+// let village4 = village3.move("Ernie's House");
+// console.log(village4.toString());
+// console.log(village1.toString());
 
 
+function runRobot(state, robot, memory) {
+  for (let turn = 0;; turn++) {
+    console.log(state.parcels);
+    if (state.parcels.length == 0) {
+      console.log(`Done in ${turn} turns`);
+      break;
+    }
+    let action = robot(state, memory);
+    state = state.move(action.direction);
+    memory = action.memory;
+    console.log(`Moved to ${action.direction}`);
+  }
+}
+
+function randomPick(array) {
+  let choice = Math.floor(Math.random() * array.length);
+  return array[choice];
+}
+
+function randomRobot(state) {
+  return {direction: randomPick(destinations[state.place])};
+}
+
+function routeRobot(state, memory) {
+  if (memory.length == 0) {
+    memory = mailRoute;
+  }
+  return {direction: memory[0], memory: memory.slice(1)};
+}
+
+
+// runRobot(VillageState.random(), randomRobot);
+runRobot(VillageState.random(), routeRobot, []);
 
 
 // Only used to print out destinations to the console.
