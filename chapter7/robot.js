@@ -47,18 +47,6 @@ function findRoute(graph, from, to) {
   }
 }
 
-function goalOrientedRobot({place, parcels}, route) {
-  if (route.length == 0) {
-    let parcel = parcels[0];
-    if (parcel.place != place) {
-      route = findRoute(destinations, place, parcel.place);
-    } else {
-      route = findRoute(destinations, place, parcel.address);
-    }
-  }
-  return {direction: route[0], memory: route.slice(1)};
-}
-
 
 class VillageState {
   constructor(loc, parcels) {
@@ -153,11 +141,23 @@ function routeRobot(state, memory) {
   return {direction: memory[0], memory: memory.slice(1)};
 }
 
+function goalOrientedRobot({place, parcels}, route) {
+  if (route.length == 0) {
+    let parcel = parcels[0];
+    if (parcel.place != place) {
+      route = findRoute(destinations, place, parcel.place);
+    } else {
+      route = findRoute(destinations, place, parcel.address);
+    }
+  }
+  return {direction: route[0], memory: route.slice(1)};
+}
+
 
 // runRobot(VillageState.random(), randomRobot);
 // runRobot(VillageState.random(), routeRobot, []);
 // runRobot(VillageState.random(), goalOrientedRobot, []);
-runRobot(VillageState.random(), routeRobot, []);
+// runRobot(VillageState.random(), routeRobot, []);
 
 
 // Only used to print out destinations to the console.
@@ -172,3 +172,19 @@ function displayDestinations(startingLocation) {
   return allDestinations;
 }
 // displayDestinations("Marketplace");
+
+
+
+// Exercises
+// Measuring a Robot
+// - compare two robots to find the more efficient one
+
+  // Takes two robots (and their starting memory)
+function compareRobots(robot1, memory1, robot2, memory2) {
+  // Generate 100 tasks (the random state of the village 
+  // after running VillageState.random())
+  console.log(`Average # of steps for robot1: ${}\nAverage # of step for robot1: ${}`);
+}
+
+
+compareRobots(routeRobot, [], goalOrientedRobot, []);
