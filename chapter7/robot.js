@@ -116,7 +116,7 @@ function runRobot(state, robot, memory) {
     console.log(state.parcels);
     if (state.parcels.length == 0) {
       console.log(`Done in ${turn} turns`);
-      break;
+      return turn;
     }
     let action = robot(state, memory);
     state = state.move(action.direction);
@@ -183,8 +183,30 @@ function displayDestinations(startingLocation) {
 function compareRobots(robot1, memory1, robot2, memory2) {
   // Generate 100 tasks (the random state of the village 
   // after running VillageState.random())
-  console.log(`Average # of steps for robot1: ${}\nAverage # of step for robot1: ${}`);
+  let tasks = generateTasks();
+  console.log(tasks);
+  
+
+  // Each robot solves all 100 tasks
+  // Output average number of steps each robot took in 
+  // completing the tasks.
+  console.log(`Average # of steps for robot1: ${solveTasks(tasks, robot1, memory1)}\nAverage # of step for robot2: ${solveTasks(tasks, robot2, memory2)}`);
+
 }
 
+function generateTasks(numOfTasks = 100) {
+  let tasks = [];
+  for (let i = 0; i < numOfTasks; i++) {
+    tasks.push(VillageState.random(Math.random() * 13 + 1))
+  }
+  return tasks;
+}
+
+function solveTasks(tasks, robot, memory) {
+  let solutionsAverage = tasks.map(t => runRobot(t, robot, memory))
+  .reduce((a, b) => a + b) / tasks.length;
+  console.log(`Solution Average: ${solutionsAverage}`);
+  return solutionsAverage;
+}
 
 compareRobots(routeRobot, [], goalOrientedRobot, []);
